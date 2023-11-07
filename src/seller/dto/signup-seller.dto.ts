@@ -1,8 +1,14 @@
-import { IsString, IsEmail, Length, IsPhoneNumber } from 'class-validator';
+import {
+  IsDate,
+  IsString,
+  IsEmail,
+  Length,
+  IsPhoneNumber,
+  Matches,
+} from 'class-validator';
 
-export class SignupCustomerDto {
+export class SignupSellerDto {
   @IsString()
-  @Length(2, 20)
   name: string;
 
   @IsEmail()

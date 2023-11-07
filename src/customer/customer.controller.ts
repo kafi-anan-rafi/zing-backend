@@ -11,8 +11,8 @@ export class CustomersController {
     return this.customerService.signUp(signupCustomerDto);
   }
 
-  // @Post('signin')
-  // signIn() {
-  //   return 'customer signin!';
-  // }
+  @Get('/products')
+  viewProduct() {
+    return this.customerService.viewProduct();
+  }
 }
