@@ -35,8 +35,16 @@ export class CustomerService {
     }
   }
 
-  viewProduct() {
-    return this.prisma.product.findMany();
+  async viewProduct(pid) {
+    try {
+      const response = await this.prisma.product.findUnique({
+        where: { id: parseInt(pid) },
+      });
+      if (!response) return { error: 'Product not found!' };
+      return response;
+    } catch (err) {
+      return { error: 'An unexpected error occured!' };
+    }
   }
 
   searchProduct(keyword: string) {

@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { CustomerService } from './services/customer.service';
 import { SignupCustomerDto } from './dto/signup-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('/api/customer')
 export class CustomersController {
@@ -12,6 +22,7 @@ export class CustomersController {
     return this.customerService.signUp(body);
   }
 
+  @UseGuards(AuthGuard)
   @Get('/profile/:cid')
   viewProfile(@Param('cid') cid) {
     return this.customerService.viewProfile(cid);
@@ -22,9 +33,9 @@ export class CustomersController {
     return this.customerService.updateProfile(cid, body);
   }
 
-  @Get('/products')
-  viewProduct() {
-    return this.customerService.viewProduct();
+  @Get('/product/:pid')
+  viewProduct(@Param('pid') pid) {
+    return this.customerService.viewProduct(pid);
   }
 
   @Get('/products/search')
