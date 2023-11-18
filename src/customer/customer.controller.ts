@@ -15,6 +15,7 @@ import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { Public } from 'src/auth/decorator/public.decorator';
 import { Roles } from 'src/auth/decorator/roles.decorator';
 import { Role } from 'src/auth/role.enum';
+import { OrderCustomerDto } from './dto/order-customer.dto';
 
 // CUSTOMER CONTROLLER
 
@@ -22,6 +23,7 @@ import { Role } from 'src/auth/role.enum';
 export class CustomersController {
   constructor(private readonly customerService: CustomerService) {}
   // SIGN UP
+
   @Public()
   @Post('signup')
   signUp(@Body() body: SignupCustomerDto) {
@@ -51,11 +53,14 @@ export class CustomersController {
 
   // SEARCH PRODUCT
   @Roles(Role.CUSTOMER)
-  @Get('/products/search')
+  @Get('/search')
   searchProduct(@Query('keyword') keyword: string) {
     return this.customerService.searchProduct(keyword);
   }
 
-  // @Post('/order')
-  // orderProduct(@Body() body) {}
+  // CREATE ORDER
+  @Post('/:cid/order/:pid')
+  createOrder(@Param() params, @Body() orderCustomerDto: OrderCustomerDto) {
+    return this.customerService.createOrder(params, orderCustomerDto);
+  }
 }
